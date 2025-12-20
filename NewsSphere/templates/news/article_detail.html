@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} - NewsSphere{% endblock %}
+
+{% block content %}
+<div class="container">
+    <article class="article-detail">
+        <a href="javascript:history.back()" class="back-link">&larr; Back to News</a>
+        
+        {% if article.urlToImage %}
+            <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="article-image">
+        {% endif %}
+        
+        <div class="article-meta">
+            <span class="article-source">{{ article.source.name }}</span>
+            {% if article.publishedAt %}
+                <span class="article-date">{{ article.publishedAt|slice:":10" }}</span>
+            {% endif %}
+            {% if article.author %}
+                <span class="article-author">By {{ article.author }}</span>
+            {% endif %}
+        </div>
+        
+        <h1 class="article-title">{{ article.title }}</h1>
+        
+        {% if article.description %}
+            <p class="article-description">{{ article.description }}</p>
+        {% endif %}
+        
+        {% if article.content %}
+            <div class="article-content">{{ article.content }}</div>
+        {% endif %}
+        
+        {% if article.url %}
+            <a href="{{ article.url }}" target="_blank" rel="noopener" class="btn btn-primary">Read Full Article</a>
+        {% endif %}
+    </article>
+</div>
+{% endblock %}
