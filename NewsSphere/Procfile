@@ -1,1 +1,1 @@
-web: cd NewsSphere && gunicorn newssphere.wsgi
+web: gunicorn newssphere.wsgi
