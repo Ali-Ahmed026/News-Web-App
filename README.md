@@ -15,7 +15,7 @@ A modern, responsive news aggregation web application that brings you the latest
 ## 🚀 Quick Start
 
 ### Try It Online
-Visit the live application at: [Your Render URL Here]
+Visit the live application at: **[https://newssphere-fg8a.onrender.com/](https://newssphere-fg8a.onrender.com/)**
 
 ### Local Development Setup
 
