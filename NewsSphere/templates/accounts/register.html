@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - NewsSphere{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Join NewsSphere to access all features</p>
+            
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <span class="form-error">{{ field.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+            
+            <p class="auth-footer">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

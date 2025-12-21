@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}NewsSphere - Top Headlines{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="hero">
+        <h1>Stay Informed with NewsSphere</h1>
+        <p>Your gateway to the latest news from around the world</p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started</a>
+        {% endif %}
+    </section>
+
+    <section class="news-section">
+        <h2>Top Headlines</h2>
+        {% if articles %}
+            <div class="news-grid">
+                {% for article in articles %}
+                    <article class="news-card">
+                        {% if article.urlToImage %}
+                            <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="news-image" loading="lazy">
+                        {% else %}
+                            <div class="news-image-placeholder"></div>
+                        {% endif %}
+                        <div class="news-content">
+                            <span class="news-source">{{ article.source.name }}</span>
+                            <h3 class="news-title">{{ article.title|truncatewords:12 }}</h3>
+                            <p class="news-description">{{ article.description|truncatewords:20|default:"" }}</p>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'article_detail' %}?title={{ article.title|urlencode }}&description={{ article.description|urlencode }}&content={{ article.content|urlencode }}&url={{ article.url|urlencode }}&image={{ article.urlToImage|urlencode }}&source={{ article.source.name|urlencode }}&published={{ article.publishedAt|urlencode }}&author={{ article.author|urlencode }}" class="btn btn-sm">Read More</a>
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-sm">Login to Read</a>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-results">No articles available at the moment.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

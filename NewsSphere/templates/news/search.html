@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Search: {{ query }} - NewsSphere{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="news-section">
+        <h2>Search Results{% if query %} for "{{ query }}"{% endif %}</h2>
+        
+        <form action="{% url 'search' %}" method="get" class="search-form-large">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search news..." class="search-input-large">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        
+        {% if articles %}
+            <div class="news-grid">
+                {% for article in articles %}
+                    <article class="news-card">
+                        {% if article.urlToImage %}
+                            <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="news-image" loading="lazy">
+                        {% else %}
+                            <div class="news-image-placeholder"></div>
+                        {% endif %}
+                        <div class="news-content">
+                            <span class="news-source">{{ article.source.name }}</span>
+                            <h3 class="news-title">{{ article.title|truncatewords:12 }}</h3>
+                            <p class="news-description">{{ article.description|truncatewords:20|default:"" }}</p>
+                            <a href="{% url 'article_detail' %}?title={{ article.title|urlencode }}&description={{ article.description|urlencode }}&content={{ article.content|urlencode }}&url={{ article.url|urlencode }}&image={{ article.urlToImage|urlencode }}&source={{ article.source.name|urlencode }}&published={{ article.publishedAt|urlencode }}&author={{ article.author|urlencode }}" class="btn btn-sm">Read More</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% elif query %}
+            <p class="no-results">No articles found for "{{ query }}".</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
